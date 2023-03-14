@@ -1,15 +1,34 @@
 ---
+const response = await fetch("https://kea-alt-del.dk/t7/api/products");
+const data = await response.json();
+import { Debug } from "astro/components";
+import Product from "../components/Product.astro";
+console.log(data);
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <h1>Astro</h1>
+    <Debug {data} />
+    <!-- {[<Product title="Dannie" />, <Product title="Jonas" />]} -->
+
+    {
+      data.map((product) => {
+        return (
+          <Product
+            price={product.price}
+            category={product.category}
+            brandname={product.brandname}
+          />
+        );
+      })
+    }
+  </body>
 </html>
